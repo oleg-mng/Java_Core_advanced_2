@@ -18,6 +18,12 @@ public class Program {
     public static void main(String[] args) {
         initialize();
         printField();
+        while (true) {
+            humanTurn();
+            printField();
+            aiTurn();
+            printField();
+        }
 
     }
 
@@ -51,21 +57,36 @@ public class Program {
         for (int i = 0; i < fieldSizeX * 2 + 2; i++) {
             System.out.print("-");
         }
+        System.out.println();
     }
-    private static void humanTurn(){
+
+    private static void humanTurn() {
         int x, y;
         do {
             System.out.println("Введите координаты хода X и Y (от 1 до 3) через пробел >>> ");
-            x = scanner.nextInt() -1;
+            x = scanner.nextInt() - 1;
             y = scanner.nextInt() - 1;
 
         }
-        while ()
+        while (!isCellValid(x, y) || !isCellEmpty(x, y));
+        field[x][y] = DOT_HUMAN;
     }
-    static boolean isCellEmpty(int x, int y){
+
+    static boolean isCellEmpty(int x, int y) {
         return field[x][y] == DOT_EMPTY;
     }
-    static boolean isCellValid(int x, int y){
-        return x>=0 && x < fieldSizeX && y >= 0 && y < fieldSizeY;
+
+    static boolean isCellValid(int x, int y) {
+        return x >= 0 && x < fieldSizeX && y >= 0 && y < fieldSizeY;
+    }
+
+    private static void aiTurn() {
+        int x, y;
+        do {
+            x = random.nextInt(fieldSizeX);
+            y = random.nextInt(fieldSizeY);
+        }
+        while (!isCellEmpty(x, y));
+        field[x][y] = DOT_AI;
     }
 }
