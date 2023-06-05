@@ -22,13 +22,13 @@ public class Program {
     }
 
     private static void initialize() {
-        fieldSizeX = 10;
-        fieldSizeY = 5;
+        fieldSizeX = 3;
+        fieldSizeY = 3;
 
         field = new char[fieldSizeX][fieldSizeY];
-        for (int x = 0; x < fieldSizeY; x++) {
-            for (int y = 0; y < fieldSizeX; y++) {
-                field[y][x] = DOT_EMPTY;
+        for (int x = 0; x < fieldSizeX; x++) {
+            for (int y = 0; y < fieldSizeY; y++) {
+                field[x][y] = DOT_EMPTY;
             }
         }
     }
@@ -40,10 +40,10 @@ public class Program {
         }
         System.out.println();
 
-        for(int i = 0; i <fieldSizeY; i++){
-            System.out.print(i+1 +"|");
-            for (int j = 0; j < fieldSizeX; j++){
-                System.out.print(field[j][i]+"|");
+        for (int i = 0; i < fieldSizeY; i++) {
+            System.out.print(i + 1 + "|");
+            for (int j = 0; j < fieldSizeX; j++) {
+                System.out.print(field[j][i] + "|");
             }
             System.out.println();
         }
@@ -51,6 +51,21 @@ public class Program {
         for (int i = 0; i < fieldSizeX * 2 + 2; i++) {
             System.out.print("-");
         }
+    }
+    private static void humanTurn(){
+        int x, y;
+        do {
+            System.out.println("Введите координаты хода X и Y (от 1 до 3) через пробел >>> ");
+            x = scanner.nextInt() -1;
+            y = scanner.nextInt() - 1;
 
+        }
+        while ()
+    }
+    static boolean isCellEmpty(int x, int y){
+        return field[x][y] == DOT_EMPTY;
+    }
+    static boolean isCellValid(int x, int y){
+        return x>=0 && x < fieldSizeX && y >= 0 && y < fieldSizeY;
     }
 }
