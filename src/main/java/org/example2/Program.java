@@ -16,13 +16,20 @@ public class Program {
 
 
     public static void main(String[] args) {
-        initialize();
-        printField();
         while (true) {
-            humanTurn();
+            initialize();
             printField();
-            aiTurn();
-            printField();
+            while (true) {
+                humanTurn();
+                printField();
+                if (gameCheck(DOT_HUMAN, "Вы смогли выиграть")) break;
+                aiTurn();
+                printField();
+                if (gameCheck(DOT_AI, "Вы проиграли")) break;
+            }
+            System.out.println("Желаете снова попробовать? (Yes):");
+            if (scanner.next().equalsIgnoreCase("Y")) break;
+
         }
 
     }
@@ -38,6 +45,10 @@ public class Program {
             }
         }
     }
+
+    /*
+    Метод printField() доработан с учетом возвожного расширения поля
+     */
 
     private static void printField() {
         System.out.print("+");
@@ -88,5 +99,42 @@ public class Program {
         }
         while (!isCellEmpty(x, y));
         field[x][y] = DOT_AI;
+    }
+
+    static boolean checkWin(char c) {
+        if (field[0][0] == c && field[0][1] == c && field[0][2] == c) return true;
+        if (field[1][0] == c && field[1][1] == c && field[1][2] == c) return true;
+        if (field[2][0] == c && field[2][1] == c && field[2][2] == c) return true;
+
+        if (field[0][0] == c && field[1][1] == c && field[2][2] == c) return true;
+        if (field[0][2] == c && field[1][1] == c && field[2][0] == c) return true;
+
+
+        if (field[0][0] == c && field[1][0] == c && field[2][0] == c) return true;
+        if (field[0][1] == c && field[1][1] == c && field[2][1] == c) return true;
+        if (field[0][2] == c && field[1][2] == c && field[2][2] == c) return true;
+
+        return false;
+    }
+
+    static boolean checkDraw() {
+        for (int x = 0; x < fieldSizeX; x++) {
+            for (int y = 0; y < fieldSizeY; y++) {
+                if (isCellEmpty(x, y)) return false;
+            }
+        }
+        return true;
+    }
+    static boolean gameCheck(char c, String str){
+        if(checkWin(c)){
+            System.out.println(str);
+            return true;
+        }
+        if(checkDraw()){
+            System.out.println("Ничья");
+            return true;
+        }
+        return false;
+
     }
 }
