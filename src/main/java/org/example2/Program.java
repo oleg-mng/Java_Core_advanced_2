@@ -104,33 +104,34 @@ public class Program {
 
     static boolean checkWin(char c) {
         int count = 0;
-        for (int y = 0; y < fieldSizeX; y++) {
+        for (int y = 0; y < fieldSizeY; y++) {
             //check on horizontal
-            if (field[y][y] == c && field[y][y + 1] == c && field[y][y + 2] == c && field[y][y + 3] == c) return true;
-            if (field[y][y + 1] == c && field[y][y + 2] == c && field[y][y + 3] == c && field[y][y + 4] == c)
+            if (field[y][0] == c && field[y][1] == c && field[y][2] == c && field[y][3] == c) return true;
+            if (field[y][1] == c && field[y][1] == c && field[y][3] == c && field[y][4] == c)
                 return true;
 
             //check on vertical
 
-            if (field[y][y] == c && field[y + 1][y] == c && field[y + 2][y] == c && field[y + 3][y] == c) return true;
-            if (field[y + 1][y] == c && field[y + 2][y] == c && field[y + 3][y] == c && field[y + 4][y] == c)
+            if (field[0][y] == c && field[1][y] == c && field[2][y] == c && field[3][y] == c) return true;
+            if (field[1][y] == c && field[2][y] == c && field[3][y] == c && field[4][y] == c)
                 return true;
+        }
 
             //diagonal small check
-            if (y == 3) {
+        int y = 3;
                 if (field[y][y - 3] == c && field[y - 1][y - 2] == c && field[y - 2][y - 1] == c && field[y - 3][y] == c)
                     return true;
-                if (field[y + 1][y - 2] == c && field[y][y - 1] == c && field[y - 1][y - 2] == c && field[y - 2][y + 1] == c)
+                if (field[y + 1][y - 2] == c && field[y][y - 1] == c && field[y - 1][y] == c && field[y - 2][y + 1] == c)
                     return true;
 
                 if (field[y - 2][y - 3] == c && field[y - 1][y - 2] == c && field[y][y - 1] == c && field[y + 1][y] == c)
                     return true;
                 if (field[y - 3][y - 2] == c && field[y - 2][y - 1] == c && field[y - 1][y] == c && field[y][y + 1] == c)
                     return true;
-            }
+
+                y = 4;
 
             //diagonal big check
-            if (y == 4) {
                 if (field[y][y - 4] == c && field[y - 1][y - 3] == c && field[y - 2][y - 2] == c && field[y - 3][y - 1] == c)
                     return true;
                 if (field[y - 1][y - 3] == c && field[y - 2][y - 2] == c && field[y - 3][y - 1] == c && field[y - 4][y] == c)
@@ -141,10 +142,7 @@ public class Program {
                 if (field[y - 3][y - 3] == c && field[y - 2][y - 2] == c && field[y - 1][y - 1] == c && field[y][y] == c)
                     return true;
 
-            }
-            return false;
 
-        }
 
 
 //        if (field[0][0] == c && field[0][1] == c && field[0][2] == c) return true;
