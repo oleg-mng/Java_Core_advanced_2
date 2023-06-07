@@ -4,6 +4,7 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class Program {
+    private static final int WIN_COUNT = 4;
     private static final char DOT_HUMAN = 'X';
     private static final char DOT_AI = 'Y';
     private static final char DOT_EMPTY = '.';
@@ -35,8 +36,8 @@ public class Program {
     }
 
     private static void initialize() {
-        fieldSizeX = 3;
-        fieldSizeY = 3;
+        fieldSizeX = 5;
+        fieldSizeY = 5;
 
         field = new char[fieldSizeX][fieldSizeY];
         for (int x = 0; x < fieldSizeX; x++) {
@@ -74,7 +75,7 @@ public class Program {
     private static void humanTurn() {
         int x, y;
         do {
-            System.out.println("Введите координаты хода X и Y (от 1 до 3) через пробел >>> ");
+            System.out.println("Введите координаты хода X и Y (от 1 до "+ fieldSizeY+") через пробел >>> ");
             x = scanner.nextInt() - 1;
             y = scanner.nextInt() - 1;
 
@@ -102,17 +103,61 @@ public class Program {
     }
 
     static boolean checkWin(char c) {
-        if (field[0][0] == c && field[0][1] == c && field[0][2] == c) return true;
-        if (field[1][0] == c && field[1][1] == c && field[1][2] == c) return true;
-        if (field[2][0] == c && field[2][1] == c && field[2][2] == c) return true;
+        int count = 0;
+        for (int y = 0; y < fieldSizeX; y++) {
+            //check on horizontal
+            if (field[y][y] == c && field[y][y + 1] == c && field[y][y + 2] == c && field[y][y + 3] == c) return true;
+            if (field[y][y + 1] == c && field[y][y + 2] == c && field[y][y + 3] == c && field[y][y + 4] == c)
+                return true;
 
-        if (field[0][0] == c && field[1][1] == c && field[2][2] == c) return true;
-        if (field[0][2] == c && field[1][1] == c && field[2][0] == c) return true;
+            //check on vertical
+
+            if (field[y][y] == c && field[y + 1][y] == c && field[y + 2][y] == c && field[y + 3][y] == c) return true;
+            if (field[y + 1][y] == c && field[y + 2][y] == c && field[y + 3][y] == c && field[y + 4][y] == c)
+                return true;
+
+            //diagonal small check
+            if (y == 3) {
+                if (field[y][y - 3] == c && field[y - 1][y - 2] == c && field[y - 2][y - 1] == c && field[y - 3][y] == c)
+                    return true;
+                if (field[y + 1][y - 2] == c && field[y][y - 1] == c && field[y - 1][y - 2] == c && field[y - 2][y + 1] == c)
+                    return true;
+
+                if (field[y - 2][y - 3] == c && field[y - 1][y - 2] == c && field[y][y - 1] == c && field[y + 1][y] == c)
+                    return true;
+                if (field[y - 3][y - 2] == c && field[y - 2][y - 1] == c && field[y - 1][y] == c && field[y][y + 1] == c)
+                    return true;
+            }
+
+            //diagonal big check
+            if (y == 4) {
+                if (field[y][y - 4] == c && field[y - 1][y - 3] == c && field[y - 2][y - 2] == c && field[y - 3][y - 1] == c)
+                    return true;
+                if (field[y - 1][y - 3] == c && field[y - 2][y - 2] == c && field[y - 3][y - 1] == c && field[y - 4][y] == c)
+                    return true;
+
+                if (field[y - 4][y - 4] == c && field[y - 3][y - 3] == c && field[y - 2][y - 2] == c && field[y - 3][y - 3] == c)
+                    return true;
+                if (field[y - 3][y - 3] == c && field[y - 2][y - 2] == c && field[y - 1][y - 1] == c && field[y][y] == c)
+                    return true;
+
+            }
+            return false;
+
+        }
 
 
-        if (field[0][0] == c && field[1][0] == c && field[2][0] == c) return true;
-        if (field[0][1] == c && field[1][1] == c && field[2][1] == c) return true;
-        if (field[0][2] == c && field[1][2] == c && field[2][2] == c) return true;
+//        if (field[0][0] == c && field[0][1] == c && field[0][2] == c) return true;
+//        if (field[1][0] == c && field[1][1] == c && field[1][2] == c) return true;
+//        if (field[2][0] == c && field[2][1] == c && field[2][2] == c) return true;
+//
+//        if (field[0][0] == c && field[1][1] == c && field[2][2] == c) return true;
+//        if (field[0][2] == c && field[1][1] == c && field[2][0] == c) return true;
+//
+//
+//        if (field[0][0] == c && field[1][0] == c && field[2][0] == c) return true;
+//        if (field[0][1] == c && field[1][1] == c && field[2][1] == c) return true;
+//        if (field[0][2] == c && field[1][2] == c && field[2][2] == c) return true;
 
         return false;
     }
@@ -125,12 +170,13 @@ public class Program {
         }
         return true;
     }
-    static boolean gameCheck(char c, String str){
-        if(checkWin(c)){
+
+    static boolean gameCheck(char c, String str) {
+        if (checkWin(c)) {
             System.out.println(str);
             return true;
         }
-        if(checkDraw()){
+        if (checkDraw()) {
             System.out.println("Ничья");
             return true;
         }
