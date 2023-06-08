@@ -98,7 +98,57 @@ public class Program {
         boolean flag = false;
         for (int x = 0; x < fieldSizeX; x++) {
             for (int y = 0; y < fieldSizeY; y++) {
+                //for two in a row
+                if (isCellValid(x, y) && isCellValid(x, y + 1)) {
+                    if (field[x][y] == DOT_HUMAN && field[x][y + 1] == DOT_HUMAN &&
+                            isCellValid(x, y - 1) && isCellEmpty(x, y - 1)) {
+                        field[x][y - 1] = DOT_AI;
+                        flag = true;
+                    }
+                    if (field[x][y] == DOT_HUMAN && field[x][y + 1] == DOT_HUMAN &&
+                            isCellValid(x, y + 2) && isCellEmpty(x, y + 2) && flag == false) {
+                        field[x][y + 2] = DOT_AI;
+                        flag = true;
+                    }
+                }
+                if (isCellValid(x, y) && isCellValid(x + 1, y)) {
+                    if (field[x][y] == DOT_HUMAN && field[x + 1][y] == DOT_HUMAN &&
+                            isCellValid(x - 1, y) && isCellEmpty(x - 1, y)) {
+                        field[x - 1][y] = DOT_AI;
+                        flag = true;
+                    }
+                    if (field[x][y] == DOT_HUMAN && field[x][y + 1] == DOT_HUMAN &&
+                            isCellValid(x + 2, y) && isCellEmpty(x + 2, y) && flag == false) {
+                        field[x + 2][y] = DOT_AI;
+                        flag = true;
+                    }
+                }
+                if (isCellValid(x, y) && isCellValid(x + 1, y + 1)) {
+                    if (field[x][y] == DOT_HUMAN && field[x + 1][y + 1] == DOT_HUMAN &&
+                            isCellValid(x - 1, y - 1) && isCellEmpty(x - 1, y)) {
+                        field[x - 1][y - 1] = DOT_AI;
+                        flag = true;
+                    }
+                    if (field[x][y] == DOT_HUMAN && field[x + 1][y + 1] == DOT_HUMAN &&
+                            isCellValid(x + 2, y + 2) && isCellEmpty(x + 2, y + 2) && flag == false) {
+                        field[x + 2][y + 2] = DOT_AI;
+                        flag = true;
+                    }
+                }
+                if (isCellValid(x, y) && isCellValid(x + 1, y - 1)) {
+                    if (field[x][y] == DOT_HUMAN && field[x + 1][y - 1] == DOT_HUMAN &&
+                            isCellValid(x - 1, y + 1) && isCellEmpty(x - 1, y + 1)) {
+                        field[x - 1][y + 1] = DOT_AI;
+                        flag = true;
+                    }
+                    if (field[x][y] == DOT_HUMAN && field[x + 1][y - 1] == DOT_HUMAN &&
+                            isCellValid(x + 2, y - 2) && isCellEmpty(x + 2, y - 2) && flag == false) {
+                        field[x + 2][y - 2] = DOT_AI;
+                        flag = true;
+                    }
+                }
 
+                // for three in a row
                 if (isCellValid(x, y) && isCellValid(x, y + 1) && isCellValid(x, y + 2)) {
                     if (field[x][y] == DOT_HUMAN && field[x][y + 1] == DOT_HUMAN && field[x][y + 2] == DOT_HUMAN &&
                             isCellValid(x, y - 1) && isCellEmpty(x, y - 1)) {
@@ -111,33 +161,42 @@ public class Program {
                         flag = true;
                     }
                 }
-                if (isCellValid(x, y) && isCellValid(x+1, y) && isCellValid(x +2, y)) {
-                    if (field[x][y] == DOT_HUMAN && field[x +1 ][y] == DOT_HUMAN && field[x +2 ][y] == DOT_HUMAN &&
+                if (isCellValid(x, y) && isCellValid(x + 1, y) && isCellValid(x + 2, y)) {
+                    if (field[x][y] == DOT_HUMAN && field[x + 1][y] == DOT_HUMAN && field[x + 2][y] == DOT_HUMAN &&
                             isCellValid(x - 1, y) && isCellEmpty(x - 1, y)) {
-                        field[x-1][y] = DOT_AI;
+                        field[x - 1][y] = DOT_AI;
                         flag = true;
                     }
-                    if (field[x][y] == DOT_HUMAN && field[x +1][y] == DOT_HUMAN && field[x +2][y] == DOT_HUMAN &&
-                            isCellValid(x +3, y ) && isCellEmpty(x +3 , y) && flag == false) {
-                        field[x+3][y] = DOT_AI;
+                    if (field[x][y] == DOT_HUMAN && field[x + 1][y] == DOT_HUMAN && field[x + 2][y] == DOT_HUMAN &&
+                            isCellValid(x + 3, y) && isCellEmpty(x + 3, y) && flag == false) {
+                        field[x + 3][y] = DOT_AI;
                         flag = true;
                     }
                 }
-//                if (isCellValid(x, y) && isCellValid(x + 1, y) && isCellValid(x + 2, y) && isCellValid(x - 1, y) ||
-//                        (isCellValid(x + 3, y))) {
-//                    if (field[x][y] == DOT_HUMAN && field[x + 1][y] == DOT_HUMAN && field[x + 2][y] == DOT_HUMAN && isCellEmpty(x - 1, y)) {
-//                        if (isCellEmpty(x - 1, y)) {
-//                            field[x - 1][y] = DOT_AI;
-//                            flag = true;
-//                        }
-////                        else if (isCellEmpty(x + 3, y) && flag == false) {
-////                            field[x + 3][y] = DOT_AI;
-////                            flag = true;
-////                            break;
-////                        }
-//                    }
-//                }
-
+                if (isCellValid(x, y) && isCellValid(x + 1, y + 1) && isCellValid(x + 2, y + 2)) {
+                    if (field[x][y] == DOT_HUMAN && field[x + 1][y + 1] == DOT_HUMAN && field[x + 2][y + 2] == DOT_HUMAN &&
+                            isCellValid(x - 1, y - 1) && isCellEmpty(x - 1, y - 1)) {
+                        field[x - 1][y - 1] = DOT_AI;
+                        flag = true;
+                    }
+                    if (field[x][y] == DOT_HUMAN && field[x + 1][y + 1] == DOT_HUMAN && field[x + 2][y + 2] == DOT_HUMAN &&
+                            isCellValid(x + 3, y + 3) && isCellEmpty(x + 3, y + 3) && flag == false) {
+                        field[x + 3][y + 3] = DOT_AI;
+                        flag = true;
+                    }
+                }
+                if (isCellValid(x, y) && isCellValid(x + 1, y - 1) && isCellValid(x + 2, y - 2)) {
+                    if (field[x][y] == DOT_HUMAN && field[x + 1][y - 1] == DOT_HUMAN && field[x + 2][y - 2] == DOT_HUMAN &&
+                            isCellValid(x - 1, y + 1) && isCellEmpty(x - 1, y + 1)) {
+                        field[x - 1][y + 1] = DOT_AI;
+                        flag = true;
+                    }
+                    if (field[x][y] == DOT_HUMAN && field[x + 1][y - 1] == DOT_HUMAN && field[x + 2][y - 2] == DOT_HUMAN &&
+                            isCellValid(x + 3, y - 3) && isCellEmpty(x + 3, y - 3) && flag == false) {
+                        field[x + 3][y - 3] = DOT_AI;
+                        flag = true;
+                    }
+                }
 
             }
         }
