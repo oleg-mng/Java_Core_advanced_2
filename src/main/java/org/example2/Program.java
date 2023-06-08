@@ -75,7 +75,7 @@ public class Program {
     private static void humanTurn() {
         int x, y;
         do {
-            System.out.println("Введите координаты хода X и Y (от 1 до "+ fieldSizeY+") через пробел >>> ");
+            System.out.println("Введите координаты хода X и Y (от 1 до " + fieldSizeY + ") через пробел >>> ");
             x = scanner.nextInt() - 1;
             y = scanner.nextInt() - 1;
 
@@ -103,47 +103,74 @@ public class Program {
     }
 
     static boolean checkWin(char c) {
-        int count = 0;
-        for (int y = 0; y < fieldSizeY; y++) {
-            //check on horizontal
-            if (field[y][0] == c && field[y][1] == c && field[y][2] == c && field[y][3] == c) return true;
-            if (field[y][1] == c && field[y][1] == c && field[y][3] == c && field[y][4] == c)
-                return true;
+        //Variant 2
+        for (int x = 0; x < fieldSizeX; x++) {
+            for (int y = 0; y < fieldSizeY; y++) {
+                // direct0
+                if (isCellValid(x - 1, y + 1) && isCellValid(x - 2, y + 2) && isCellValid(x - 3, y + 3)) {
+                    if (field[x][y] == c && field[x - 1][y + 1] == c && field[x - 2][y + 2] == c && field[x - 3][y + 3] == c)
+                        return true;
+                }
+                // direct1
+                if (isCellValid(x, y + 1) && isCellValid(x, y + 2) && isCellValid(x, y + 3)) {
+                    if (field[x][y] == c && field[x][y + 1] == c && field[x][y + 2] == c && field[x][y + 3] == c)
+                        return true;
+                }
+                // direct2
+                if (isCellValid(x + 1, y + 1) && isCellValid(x + 2, y + 2) && isCellValid(x + 3, y + 3)) {
+                    if (field[x][y] == c && field[x + 1][y + 1] == c && field[x + 2][y + 2] == c && field[x + 3][y + 3] == c)
+                        return true;
+                }
+                // direct3
+                if (isCellValid(x + 1, y) && isCellValid(x + 2, y) && isCellValid(x + 3, y)) {
+                    if (field[x][y] == c && field[x + 1][y] == c && field[x + 2][y] == c && field[x + 3][y] == c)
+                        return true;
+                }
 
-            //check on vertical
-
-            if (field[0][y] == c && field[1][y] == c && field[2][y] == c && field[3][y] == c) return true;
-            if (field[1][y] == c && field[2][y] == c && field[3][y] == c && field[4][y] == c)
-                return true;
+            }
         }
 
-            //diagonal small check
-        int y = 3;
-                if (field[y][y - 3] == c && field[y - 1][y - 2] == c && field[y - 2][y - 1] == c && field[y - 3][y] == c)
-                    return true;
-                if (field[y + 1][y - 2] == c && field[y][y - 1] == c && field[y - 1][y] == c && field[y - 2][y + 1] == c)
-                    return true;
+//Variant 1
 
-                if (field[y - 2][y - 3] == c && field[y - 1][y - 2] == c && field[y][y - 1] == c && field[y + 1][y] == c)
-                    return true;
-                if (field[y - 3][y - 2] == c && field[y - 2][y - 1] == c && field[y - 1][y] == c && field[y][y + 1] == c)
-                    return true;
+//        for (int y = 0; y < fieldSizeY; y++) {
+//            //check on horizontal
+//            if (field[y][0] == c && field[y][1] == c && field[y][2] == c && field[y][3] == c) return true;
+//            if (field[y][1] == c && field[y][1] == c && field[y][3] == c && field[y][4] == c)
+//                return true;
+//
+//            //check on vertical
+//
+//            if (field[0][y] == c && field[1][y] == c && field[2][y] == c && field[3][y] == c) return true;
+//            if (field[1][y] == c && field[2][y] == c && field[3][y] == c && field[4][y] == c)
+//                return true;
+//        }
+//
+//            //diagonal small check
+//        int y = 3;
+//                if (field[y][y - 3] == c && field[y - 1][y - 2] == c && field[y - 2][y - 1] == c && field[y - 3][y] == c)
+//                    return true;
+//                if (field[y + 1][y - 2] == c && field[y][y - 1] == c && field[y - 1][y] == c && field[y - 2][y + 1] == c)
+//                    return true;
+//
+//                if (field[y - 2][y - 3] == c && field[y - 1][y - 2] == c && field[y][y - 1] == c && field[y + 1][y] == c)
+//                    return true;
+//                if (field[y - 3][y - 2] == c && field[y - 2][y - 1] == c && field[y - 1][y] == c && field[y][y + 1] == c)
+//                    return true;
+//
+//                y = 4;
+//
+//            //diagonal big check
+//                if (field[y][y - 4] == c && field[y - 1][y - 3] == c && field[y - 2][y - 2] == c && field[y - 3][y - 1] == c)
+//                    return true;
+//                if (field[y - 1][y - 3] == c && field[y - 2][y - 2] == c && field[y - 3][y - 1] == c && field[y - 4][y] == c)
+//                    return true;
+//
+//                if (field[y - 4][y - 4] == c && field[y - 3][y - 3] == c && field[y - 2][y - 2] == c && field[y - 3][y - 3] == c)
+//                    return true;
+//                if (field[y - 3][y - 3] == c && field[y - 2][y - 2] == c && field[y - 1][y - 1] == c && field[y][y] == c)
+//                    return true;
 
-                y = 4;
-
-            //diagonal big check
-                if (field[y][y - 4] == c && field[y - 1][y - 3] == c && field[y - 2][y - 2] == c && field[y - 3][y - 1] == c)
-                    return true;
-                if (field[y - 1][y - 3] == c && field[y - 2][y - 2] == c && field[y - 3][y - 1] == c && field[y - 4][y] == c)
-                    return true;
-
-                if (field[y - 4][y - 4] == c && field[y - 3][y - 3] == c && field[y - 2][y - 2] == c && field[y - 3][y - 3] == c)
-                    return true;
-                if (field[y - 3][y - 3] == c && field[y - 2][y - 2] == c && field[y - 1][y - 1] == c && field[y][y] == c)
-                    return true;
-
-
-
+        //From seminar
 
 //        if (field[0][0] == c && field[0][1] == c && field[0][2] == c) return true;
 //        if (field[1][0] == c && field[1][1] == c && field[1][2] == c) return true;
