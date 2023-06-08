@@ -200,6 +200,54 @@ public class Program {
 
             }
         }
+        for (int x = 0; x < fieldSizeX; x++) {
+            for (int y = 0; y < fieldSizeY; y++) {
+                if (isCellValid(x, y) && isCellValid(x + 1, y + 1) && isCellValid(x + 2, y + 2)) {
+                    if (field[x][y] == DOT_AI && field[x + 1][y + 1] == DOT_AI && field[x + 2][y + 2] == DOT_AI &&
+                            isCellValid(x - 1, y - 1) && isCellEmpty(x - 1, y - 1)) {
+                        field[x - 1][y - 1] = DOT_AI;
+                        flag = true;
+                    }
+                    if (field[x][y] == DOT_AI && field[x + 1][y + 1] == DOT_AI && field[x + 2][y + 2] == DOT_AI &&
+                            isCellValid(x + 3, y + 3) && isCellEmpty(x + 3, y + 3) && flag == false) {
+                        field[x + 3][y + 3] = DOT_AI;
+                        flag = true;
+                    }
+                }
+
+            }
+        }
+
+        for (int x = 0; x < fieldSizeX; x++) {
+            for (int y = 0; y < fieldSizeY; y++) {
+                if (field[x][y] == DOT_AI && isCellValid(x - 1, y) && isCellEmpty(x - 1, y) && flag == false) {
+                    field[x - 1][y] = DOT_AI;
+                    flag = true;
+                }
+                if (field[x][y] == DOT_AI && isCellValid(x + 1, y) && isCellEmpty(x + 1, y) && flag == false) {
+                    field[x + 1][y] = DOT_AI;
+                    flag = true;
+                }
+            }
+        }
+
+        for (int x = 0; x < fieldSizeX; x++) {
+            for (int y = 0; y < fieldSizeY; y++) {
+                if (isCellValid(x, y) && isCellValid(x, y + 1)) {
+                    if (field[x][y] == DOT_AI && field[x][y + 1] == DOT_AI &&
+                            isCellValid(x, y - 1) && isCellEmpty(x, y - 1)) {
+                        field[x][y - 1] = DOT_AI;
+                        flag = true;
+                    }
+                    if (field[x][y] == DOT_AI && field[x][y + 1] == DOT_AI &&
+                            isCellValid(x, y + 2) && isCellEmpty(x, y + 2) && flag == false) {
+                        field[x][y + 2] = DOT_AI;
+                        flag = true;
+                    }
+                }
+            }
+        }
+
         if (flag == false) {
             do {
                 i = random.nextInt(fieldSizeX);
